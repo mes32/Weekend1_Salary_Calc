@@ -11,4 +11,11 @@ function addEventHandlers() {
 
 function addEmployee() {
     console.log('in addEmployee()');
+    const firstName = $('#first-name').val();
+    const lastName = $('#last-name').val();
+    const employeeID = $('#employee-id').val();
+    const employeeTitle = $('#employee-title').val();
+    const annualSalary = $('#annual-salary').val();
+
+    console.log(firstName, lastName, employeeID, employeeTitle, annualSalary)
 }
