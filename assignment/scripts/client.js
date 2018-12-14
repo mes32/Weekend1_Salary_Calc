@@ -17,24 +17,24 @@ function addEmployee() {
     const lastName = $('#last-name').val();
     const employeeID = $('#employee-id').val();
     const employeeTitle = $('#employee-title').val();
-    const annualSalary = $('#annual-salary').val();
+    const annualSalary = parseFloat($('#annual-salary').val());
 
-    // console.log(firstName, lastName, employeeID, employeeTitle, annualSalary);
-    annualExpenses += parseFloat(annualSalary);
-    // console.log(`Annual Expenses: ${annualExpenses}`);
-    // console.log(`Monthly Expenses: ${annualExpenses/12.0}`);
+    annualExpenses += annualSalary;
     updateMonthlyExpenses();
+    updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary);
 }
 
 function updateMonthlyExpenses() {
     const monthlyExpenses = annualExpenses / 12.0;
-    $('#monthly-expenses').html('Total Monthly: ' + formatAsUSD(monthlyExpenses));
+    $('#monthly-expenses').html('Total Monthly: $' + formatAsUSD(monthlyExpenses));
+}
+
+function updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary) {
+    $('#employee-list').append(`<li>${firstName}, ${lastName}, ${employeeID}, ${employeeTitle}, ${formatAsUSD(annualSalary)}</li>`);
 }
 
 function formatAsUSD(inputNum) {
     const formattedNum = inputNum.toLocaleString("en", {
-        style: "currency",
-        currency: "USD",
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
