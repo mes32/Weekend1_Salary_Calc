@@ -1,0 +1,21 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: aliceblue;
+    color: #222222;
+    width: 768px;
+    margin: 50px auto;
+
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Roboto Slab', serif;
+}
+
+h3 {
+    text-align: right;
+}
