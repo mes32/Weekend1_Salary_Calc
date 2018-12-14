@@ -1,4 +1,6 @@
 
+let annualExpenses = 0;
+
 $(onReady);
 function onReady() {
     console.log('JQ in onReady()');
@@ -17,5 +19,8 @@ function addEmployee() {
     const employeeTitle = $('#employee-title').val();
     const annualSalary = $('#annual-salary').val();
 
-    console.log(firstName, lastName, employeeID, employeeTitle, annualSalary)
+    console.log(firstName, lastName, employeeID, employeeTitle, annualSalary);
+    annualExpenses += parseFloat(annualSalary);
+    console.log(`Annual Expenses: ${annualExpenses}`);
+    console.log(`Monthly Expenses: ${annualExpenses/12.0}`);
 }
