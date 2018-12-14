@@ -19,8 +19,24 @@ function addEmployee() {
     const employeeTitle = $('#employee-title').val();
     const annualSalary = $('#annual-salary').val();
 
-    console.log(firstName, lastName, employeeID, employeeTitle, annualSalary);
+    // console.log(firstName, lastName, employeeID, employeeTitle, annualSalary);
     annualExpenses += parseFloat(annualSalary);
-    console.log(`Annual Expenses: ${annualExpenses}`);
-    console.log(`Monthly Expenses: ${annualExpenses/12.0}`);
+    // console.log(`Annual Expenses: ${annualExpenses}`);
+    // console.log(`Monthly Expenses: ${annualExpenses/12.0}`);
+    updateMonthlyExpenses();
+}
+
+function updateMonthlyExpenses() {
+    const monthlyExpenses = annualExpenses / 12.0;
+    $('#monthly-expenses').html('Total Monthly: ' + formatAsUSD(monthlyExpenses));
+}
+
+function formatAsUSD(inputNum) {
+    const formattedNum = inputNum.toLocaleString("en", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+    return formattedNum;
 }
