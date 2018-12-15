@@ -2,7 +2,7 @@
 Create an application that records employee salaries and adds salaries up to report monthly costs. 
 
 ## TODO List
-- append information to the DOM and clear the input fields.
+- clear the input fields.
 - If the total monthly cost exceeds $20,000, add a red background color to the total monthly cost.
 
 ## Topics Covered
