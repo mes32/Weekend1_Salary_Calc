@@ -31,6 +31,11 @@ function addEmployee() {
 function updateMonthlyExpenses() {
     const monthlyExpenses = annualExpenses / 12.0;
     $('#monthly-expenses').html('Total Monthly: $' + formatAsUSD(monthlyExpenses));
+    if (monthlyExpenses > 20000.0) {
+        $('#monthly-expenses').css('background-color', 'red');
+    } else {
+        $('#monthly-expenses').css('background-color', 'inherit');
+    }
 }
 
 // Append a given employee to the employee list in the DOM
