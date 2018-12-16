@@ -4,9 +4,14 @@ let annualExpenses = 0;
 $(onReady);
 function onReady() {
     addEventHandlers();
+
+    // If available run the corresponding set of unit tests for this script file
+    if (typeof (client_test_js) === typeof(Function)) {
+        client_test_js();
+    }
 }
 
-// Add handler functions to interactive elements
+// Add handler functions to interactive HTML elements
 function addEventHandlers() {
     $('#submit-button').on('click', addEmployee);
     $('#employee-list-tbody').on('click', '.delete-button', deleteEmployee);
@@ -28,13 +33,14 @@ function addEmployee() {
     clearInputFields();
 }
 
-// Deletes an employee's row (tr) from the employee table
+// When a 'Delete' button is pressed. Delete an employee's row (tr) from the 
+// employee table.
 function deleteEmployee() {
     $(this).parent().parent().remove();
 }
 
-// Based on the running total of annual expenses, update the displayed field for
-//  monthly expenses
+// Based on the running total of annual expenses, update the displayed heading 
+// for monthly expenses.
 function updateMonthlyExpenses() {
     const monthlyExpenses = annualExpenses / 12.0;
     $('#monthly-expenses').html('Total Monthly: $' + formatAsUSD(monthlyExpenses));
@@ -45,7 +51,7 @@ function updateMonthlyExpenses() {
     }
 }
 
-// Append a given employee to the employee list in the DOM
+// Append a set of employee data to the employee list in the DOM
 function updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary) {
     let row = '<tr>';
     row += `<td>${firstName}</td>`;
