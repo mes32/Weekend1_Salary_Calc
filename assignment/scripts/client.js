@@ -12,7 +12,8 @@ function addEventHandlers() {
     $('#employee-list-tbody').on('click', '.delete-button', deleteEmployee);
 }
 
-// When the 'Submit' button is pressed. Take the actions needed to add an employee.
+// When the 'Submit' button is pressed. Take the actions needed to add an 
+// employee.
 function addEmployee() {
     console.log('in addEmployee()');
     const firstName = $('#first-name').val();
@@ -27,11 +28,13 @@ function addEmployee() {
     clearInputFields();
 }
 
+// Deletes an employee's row (tr) from the employee table
 function deleteEmployee() {
     $(this).parent().parent().remove();
 }
 
-// Based on the running total of annual expenses, update the displayed field for monthly expenses
+// Based on the running total of annual expenses, update the displayed field for
+//  monthly expenses
 function updateMonthlyExpenses() {
     const monthlyExpenses = annualExpenses / 12.0;
     $('#monthly-expenses').html('Total Monthly: $' + formatAsUSD(monthlyExpenses));
@@ -65,7 +68,7 @@ function clearInputFields() {
 }
 
 // Format a Number as US dollars. 
-// Note: Will not include dollar sign '$'.
+// Note: Will not include a leading dollar sign '$'.
 function formatAsUSD(inputNum) {
     const formattedNum = inputNum.toLocaleString("en", {
         minimumFractionDigits: 2,

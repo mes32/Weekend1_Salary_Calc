@@ -27,7 +27,7 @@ footer {
 }
 
 h1, h2 {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Roboto Slab', sans-serif;
 }
 
 h1 {
@@ -120,8 +120,9 @@ th, td {
 
 th {
     background-color: #b9e2ff;
+    font-family: 'Roboto Slab', sans-serif;
     font-weight: bold;
-    text-align: left;
+    /* text-align: left; */
 }
 
 tr:nth-child(odd) {
