@@ -3,13 +3,13 @@ let annualExpenses = 0;
 
 $(onReady);
 function onReady() {
-    console.log('JQ in onReady()');
     addEventHandlers();
 }
 
 // Add handler functions to interactive elements
 function addEventHandlers() {
-    $('#add-employee-button').on('click', addEmployee);
+    $('#submit-button').on('click', addEmployee);
+    $('#employee-list-tbody').on('click', '.delete-button', deleteEmployee);
 }
 
 // When the 'Submit' button is pressed. Take the actions needed to add an employee.
@@ -25,6 +25,10 @@ function addEmployee() {
     updateMonthlyExpenses();
     updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary);
     clearInputFields();
+}
+
+function deleteEmployee() {
+    $(this).parent().parent().remove();
 }
 
 // Based on the running total of annual expenses, update the displayed field for monthly expenses
@@ -46,6 +50,7 @@ function updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annu
     row += `<td>${employeeID}</td>`;
     row += `<td>${employeeTitle}</td>`;
     row += `<td>${formatAsUSD(annualSalary)}</td>`;
+    row += '<td><button class="delete-button">Delete</button></td>';
     row += '</tr>'
     $('#employee-list-tbody').append(row);
 }

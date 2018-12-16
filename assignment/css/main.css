@@ -59,15 +59,6 @@ input::placeholder {
 }
 
 button {
-    padding: 0.2rem 20px;
-
-    border: 2px solid #003153;
-    border-radius: 8px;
-
-    background-color: #003153;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
     outline: none;
 }
 
@@ -76,8 +67,38 @@ button:hover {
 }
 
 button:active {
-    background-color: #003b64;
     outline: none;
+}
+
+#submit-button {
+    padding: 0.2rem 10px;
+
+    border: 2px solid #003153;
+    border-radius: 8px;
+
+    background-color: #003153;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#submit-button:active {
+    background-color: #003b64;
+}
+
+.delete-button {
+    padding: 0.2rem 8px;
+
+    border: 2px solid #990000;
+    border-radius: 8px;
+
+    background-color: #990000;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.delete-button:active {
+    background-color: #b30000;
 }
 
 table {
