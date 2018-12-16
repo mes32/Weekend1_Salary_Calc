@@ -1,36 +1,47 @@
 // --- Classes --- //
 
-
+// Class representing currency in US dollars
 class CurrencyUSD {
     constructor(inputString) {
-        if (typeof (inputString) !== typeof(String)) {
-            throw 'Input type mismatch';
+        const amount = parseFloat(inputString);
+        if (typeof(amount) !== 'number' || !isFinite(amount)) {
+            throw new CurrencyUSDError('input must parse to float');
         }
-        let ammount = parseFloat(inputString);
-        // if (ammount === NaN) {
-        //     throw 
-        // }
-        this.ammount = ammount;
+        this.amount = amount;
     }
 
-    // format(prependDollarSign) {
-    //     const formattedStr = this.ammount.toLocaleString("en", {
-    //         minimumFractionDigits: 2,
-    //         maximumFractionDigits: 2,
-    //     });
-    //     if (prependDollarSign) {
-    //         return '$' + formattedStr;
-    //     } else {
-    //         return formattedStr;
-    //     }
-    // }
+    // Format the current amount as a string for display purposes
+    format(hasDollarSign) {
+        const formattedStr = this.amount.toLocaleString("en", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+        if (hasDollarSign) {
+            return '$' + formattedStr;
+        } else {
+            return formattedStr;
+        }
+    }
 
-    // toString() {
-    //     format(false);
-    // }
+    // Override toString() using method this.format(false)
+    toString() {
+        this.format(false);
+    }
 }
 
+// Error class for CurrencyUSD
+class CurrencyUSDError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'CurrencyUSDError';
+    }
+}
+
+// --- Global variables and constants --- //
+
 let annualExpenses = 0;
+
+// --- Function definitions --- //
 
 $(onReady);
 function onReady() {

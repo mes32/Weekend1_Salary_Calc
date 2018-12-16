@@ -6,6 +6,29 @@ function client_test_js() {
     // Running unit tests and logging results to console
     logTestStart();
     // metaTests();
+
+    // Tests for class CurrencyUSD
+    unitTest('new CurrencyUSD()', null, new CurrencyUSDError('input must parse to float'));
+    unitTest('new CurrencyUSD(\'\')', null, new CurrencyUSDError('input must parse to float'));
+    unitTest('new CurrencyUSD(\'not a float\')', null, new CurrencyUSDError('input must parse to float'));
+    unitTest('new CurrencyUSD(null)', null, new CurrencyUSDError('input must parse to float'));
+    unitTest('new CurrencyUSD(0)', new CurrencyUSD(0));
+    unitTest('new CurrencyUSD(\'0\')', new CurrencyUSD(0));
+    unitTest('new CurrencyUSD(\'10.333\')', new CurrencyUSD(10.333));
+    unitTest('new CurrencyUSD(\'-3.1\')', new CurrencyUSD(3.1));
+
+    // Tests for CurrencyUSD.format
+    unitTest('(new CurrencyUSD(\'-3.1\')).format()', '-3.10');
+    unitTest('(new CurrencyUSD(\'-3.1\')).format()', (new CurrencyUSD('-3.1')).format());
+    unitTest('(new CurrencyUSD(-3.1)).format()', '-3.10');
+    unitTest('(new CurrencyUSD(53)).format()', '53.00');
+    unitTest('(new CurrencyUSD(25000.333)).format()', '25,000.33');
+    unitTest('(new CurrencyUSD(25000.333)).format(true)', '$25,000.33');
+    unitTest('(new CurrencyUSD(\'25000.333\')).format(\'true\')', '25,000.33');
+    unitTest('(new CurrencyUSD(25000.333)).format(true)', (new CurrencyUSD(25000.333)).format(true));
+    unitTest('(new CurrencyUSD(25000.333)).format(false)', (new CurrencyUSD(25000.333)).format(false));
+
+
     unitTest('formatAsUSD(53)', '53.00');
     unitTest('formatAsUSD(1.7)', '1.70');
     unitTest('formatAsUSD(0)', '0.00');
@@ -49,12 +72,16 @@ function client_test_js() {
         // if (!(err1 instanceof Error) || !(err2 instanceof Error)) {
         //     throw 'errorsEqual cannot run with non-Error inputs';
         // }
-        if (err1.name === err2.name) {
-            if (err1.message === err2.message) {
-                return true;
+        try {
+            if (err1.name === err2.name) {
+                if (err1.message === err2.message) {
+                    return true;
+                }
             }
+            return false;
+        } catch (err) {
+            return false;
         }
-        return false;
     }
 
     // Produces a nicely formatted summary of a failed unit test and logs it to 
