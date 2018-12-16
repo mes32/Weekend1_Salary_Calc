@@ -11,18 +11,41 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Salary Calculator</h1>
-    <h2>Add Employee</h2>
-    <input id="first-name" placeholder="First Name" />
-    <input id="last-name" placeholder="Last Name" />
-    <input id="employee-id" placeholder="ID" />
-    <input id="employee-title" placeholder="Title" />
-    <input id="annual-salary" placeholder="Annual Salary" />
-    <button id="add-employee-button">Submit</button>
-    <h2>Employees:</h2>
-    <ul id="employee-list">
-        <!-- Employees will be appended here -->
-    </ul>
-    <h3 id="monthly-expenses">Total Monthly: $0</h3>
+    <header>
+        <h1>Salary Calculator</h1>
+    </header>
+    <main>
+        <h2>Add Employee</h2>
+        <input type="text" id="first-name" placeholder="First Name" />
+        <input type="text" id="last-name" placeholder="Last Name" />
+        <input type="text" id="employee-id" placeholder="ID" />
+        <input type="text" id="employee-title" placeholder="Title" />
+        <input type="number" id="annual-salary" placeholder="Annual Salary" />
+        <button id="add-employee-button">Submit</button>
+        <h2>Employees:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Annual Salary</th>
+                </tr>
+            </thead>
+            <tbody id="employee-list-tbody">
+                <!-- Employees will be appended here -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <h2 id="monthly-expenses">Total Monthly: $0</h2>
+    </main>
+    <footer>
+
+    </footer>
 </body>
 </html>

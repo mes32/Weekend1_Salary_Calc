@@ -1,21 +1,116 @@
 html, body {
     margin: 0px;
     padding: 0px;
-}
 
-body {
     background-color: aliceblue;
     color: #222222;
-    width: 768px;
-    margin: 50px auto;
-
     font-family: 'Open Sans', sans-serif;
 }
 
-h1, h2, h3 {
+header {
+    background-color: #003153;
+    color: aliceblue;
+    height: 100%;
+}
+
+main {
+    margin: 50px auto;
+    width: 768px;
+
+    background-color: aliceblue;
+    color: #222222;
+}
+
+footer {
+    background-color: #003153;
+    color: aliceblue;
+}
+
+h1, h2 {
     font-family: 'Roboto Slab', serif;
 }
 
-h3 {
+h1 {
+    margin: 0px;
+    padding: 3.2rem 0rem;
+    text-align: center;
+}
+
+#monthly-expenses {
+    /* margin-right: 30px; */
     text-align: right;
+}
+
+input {
+  width: 115px;
+  padding: 4px;
+  border: 2px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #003153;
+}
+
+input::placeholder {
+  font-style: italic;
+}
+
+button {
+    padding: 0.2rem 20px;
+
+    border: 2px solid #003153;
+    border-radius: 8px;
+
+    background-color: #003153;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #003b64;
+    outline: none;
+}
+
+table {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #003153;
+
+    font-size: 0.8rem;
+}
+
+th, td {
+    padding: 0.6rem 10px;
+}
+
+th {
+    background-color: #b9e2ff;
+    font-weight: bold;
+    text-align: left;
+}
+
+tr:nth-child(odd) {
+    background-color: #ecf7ff;
+}
+
+tr:nth-child(even) {
+    background-color: #dbf0ff;
+}
+
+tfoot td {
+    background-color: #b9e2ff;
 }

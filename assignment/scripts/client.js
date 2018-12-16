@@ -40,7 +40,14 @@ function updateMonthlyExpenses() {
 
 // Append a given employee to the employee list in the DOM
 function updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary) {
-    $('#employee-list').append(`<li>${firstName}, ${lastName}, ${employeeID}, ${employeeTitle}, ${formatAsUSD(annualSalary)}</li>`);
+    let row = '<tr>';
+    row += `<td>${firstName}</td>`;
+    row += `<td>${lastName}</td>`;
+    row += `<td>${employeeID}</td>`;
+    row += `<td>${employeeTitle}</td>`;
+    row += `<td>${formatAsUSD(annualSalary)}</td>`;
+    row += '</tr>'
+    $('#employee-list-tbody').append(row);
 }
 
 // Clear all input fields
