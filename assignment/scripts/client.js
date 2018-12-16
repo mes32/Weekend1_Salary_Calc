@@ -1,3 +1,34 @@
+// --- Classes --- //
+
+
+class CurrencyUSD {
+    constructor(inputString) {
+        if (typeof (inputString) !== typeof(String)) {
+            throw 'Input type mismatch';
+        }
+        let ammount = parseFloat(inputString);
+        // if (ammount === NaN) {
+        //     throw 
+        // }
+        this.ammount = ammount;
+    }
+
+    // format(prependDollarSign) {
+    //     const formattedStr = this.ammount.toLocaleString("en", {
+    //         minimumFractionDigits: 2,
+    //         maximumFractionDigits: 2,
+    //     });
+    //     if (prependDollarSign) {
+    //         return '$' + formattedStr;
+    //     } else {
+    //         return formattedStr;
+    //     }
+    // }
+
+    // toString() {
+    //     format(false);
+    // }
+}
 
 let annualExpenses = 0;
 
