@@ -37,6 +37,11 @@ class CurrencyUSD {
         this.amount = amount;
     }
 
+    // Add a currency object to this object (using arithmetic)
+    add(additional) {
+        this.amount += additional.amount;
+    }
+
     // Format the current amount as a string for display purposes
     format(hasDollarSign) {
         const formattedStr = this.amount.toLocaleString("en", {
@@ -66,8 +71,8 @@ class CurrencyUSDError extends Error {
 
 // --- Global variables and constants --- //
 
-let annualExpenses = 0;
-let employees = [];
+let annualExpenses = new CurrencyUSD(0.00);
+let employeeList = [];
 
 // --- Function definitions --- //
 
@@ -90,17 +95,25 @@ function addEventHandlers() {
 // When the 'Submit' button is pressed. Take the actions needed to add an 
 // employee.
 function addEmployee() {
-    console.log('in addEmployee()');
     const firstName = $('#first-name').val();
     const lastName = $('#last-name').val();
     const employeeID = $('#employee-id').val();
     const employeeTitle = $('#employee-title').val();
-    const annualSalary = parseFloat($('#annual-salary').val());
+    const annualSalary = $('#annual-salary').val();
 
-    annualExpenses += annualSalary;
-    updateMonthlyExpenses();
-    updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary);
-    clearInputFields();
+    // TODO: Check that inputs are complete and provide visual feedback
+
+    try {
+        const employee = new Employee(firstName, lastName, employeeID, employeeTitle, annualSalary);
+        annualExpenses.add(employee.annualSalary);
+        employeeList.push(employee);
+
+        updateExpenses();
+        updateEmployeeList(employee);
+        clearInputFields();
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 // When a 'Delete' button is pressed. Delete an employee's row (tr) from the 
@@ -111,10 +124,11 @@ function deleteEmployee() {
 
 // Based on the running total of annual expenses, update the displayed heading 
 // for monthly expenses.
-function updateMonthlyExpenses() {
-    const monthlyExpenses = annualExpenses / 12.0;
-    $('#monthly-expenses').html('Total Monthly: $' + formatAsUSD(monthlyExpenses));
-    if (monthlyExpenses > 20000.0) {
+function updateExpenses() {
+    const monthlyExpenses = new CurrencyUSD(annualExpenses.amount / 12.0);
+    const monthlyExpensesStr = monthlyExpenses.format(true);
+    $('#monthly-expenses').html('Total Monthly: ' + monthlyExpensesStr);
+    if (monthlyExpenses.amount > 20000.0) {
         $('#monthly-expenses').css('background-color', 'red');
     } else {
         $('#monthly-expenses').css('background-color', 'inherit');
@@ -122,13 +136,19 @@ function updateMonthlyExpenses() {
 }
 
 // Append a set of employee data to the employee list in the DOM
-function updateEmployeeList(firstName, lastName, employeeID, employeeTitle, annualSalary) {
+function updateEmployeeList(employee) {
+    const firstName = employee.firstName;
+    const lastName = employee.lastName;
+    const employeeID = employee.employeeID;
+    const employeeTitle = employee.employeeTitle;
+    const annualSalary = employee.annualSalary.format();
+
     let row = '<tr>';
     row += `<td>${firstName}</td>`;
     row += `<td>${lastName}</td>`;
     row += `<td>${employeeID}</td>`;
     row += `<td>${employeeTitle}</td>`;
-    row += `<td>${formatAsUSD(annualSalary)}</td>`;
+    row += `<td>${annualSalary}</td>`;
     row += '<td><button class="delete-button">Delete</button></td>';
     row += '</tr>'
     $('#employee-list-tbody').append(row);
@@ -141,14 +161,4 @@ function clearInputFields() {
     $('#employee-id').val('');
     $('#employee-title').val('');
     $('#annual-salary').val('');
-}
-
-// Format a Number as US dollars. 
-// Note: Will not include a leading dollar sign '$'.
-function formatAsUSD(inputNum) {
-    const formattedNum = inputNum.toLocaleString("en", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    });
-    return formattedNum;
 }

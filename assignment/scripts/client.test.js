@@ -17,7 +17,13 @@ function client_test_js() {
     unitTest('new CurrencyUSD(\'10.333\')', new CurrencyUSD(10.333));
     unitTest('new CurrencyUSD(\'-3.1\')', new CurrencyUSD(3.1));
 
-    // Tests for CurrencyUSD.format
+    // Tests for CurrencyUSD.add()
+    unitTest('let a = new CurrencyUSD(0); a.amount', 0.0);
+    unitTest('let a = new CurrencyUSD(1); let b = new CurrencyUSD(1); a.add(b); a.amount', 2.0);
+    unitTest('let a = new CurrencyUSD(5.555); let b = new CurrencyUSD(-5.555); a.add(b); a.amount', 0.0);
+    unitTest('let a = new CurrencyUSD(2.25); let b = new CurrencyUSD(0.5); a.add(b); a.amount', 2.75);
+
+    // Tests for CurrencyUSD.format()
     unitTest('(new CurrencyUSD(\'-3.1\')).format()', '-3.10');
     unitTest('(new CurrencyUSD(\'-3.1\')).format()', (new CurrencyUSD('-3.1')).format());
     unitTest('(new CurrencyUSD(-3.1)).format()', '-3.10');
