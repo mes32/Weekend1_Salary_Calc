@@ -71,7 +71,6 @@ class CurrencyUSDError extends Error {
 
 // --- Global variables and constants --- //
 
-let annualExpenses = new CurrencyUSD(0.00);
 let employeeList = [];
 
 // --- Function definitions --- //
@@ -105,7 +104,6 @@ function addEmployee() {
 
     try {
         const employee = new Employee(firstName, lastName, employeeID, employeeTitle, annualSalary);
-        annualExpenses.add(employee.annualSalary);
         employeeList.push(employee);
 
         updateExpenses();
@@ -125,14 +123,19 @@ function deleteEmployee() {
     employeeList.splice(i, 1);
 
     rowElement.remove();
+    updateExpenses();
 }
 
 // Based on the running total of annual expenses, update the displayed heading 
 // for monthly expenses.
 function updateExpenses() {
-    const monthlyExpenses = new CurrencyUSD(annualExpenses.amount / 12.0);
-    const monthlyExpensesStr = monthlyExpenses.format(true);
-    $('#monthly-expenses').html('Total Monthly: ' + monthlyExpensesStr);
+    let annualExpenses = 0.0;
+    for (let i = 0; i < employeeList.length; i++) {
+        annualExpenses += employeeList[i].annualSalary.amount;
+    }
+    const monthlyExpenses = new CurrencyUSD(annualExpenses / 12.0);
+    const str = monthlyExpenses.format(true);
+    $('#monthly-expenses').html('Total Monthly: ' + str);
     if (monthlyExpenses.amount > 20000.0) {
         $('#monthly-expenses').css('background-color', 'red');
     } else {
