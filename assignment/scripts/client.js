@@ -119,7 +119,12 @@ function addEmployee() {
 // When a 'Delete' button is pressed. Delete an employee's row (tr) from the 
 // employee table.
 function deleteEmployee() {
-    $(this).parent().parent().remove();
+    const rowElement = $(this).parent().parent();
+    const employee = rowElement.data('employee');
+    const i = employeeList.indexOf(employee);
+    employeeList.splice(i, 1);
+
+    rowElement.remove();
 }
 
 // Based on the running total of annual expenses, update the displayed heading 
@@ -143,15 +148,18 @@ function updateEmployeeList(employee) {
     const employeeTitle = employee.employeeTitle;
     const annualSalary = employee.annualSalary.format();
 
-    let row = '<tr>';
-    row += `<td>${firstName}</td>`;
-    row += `<td>${lastName}</td>`;
-    row += `<td>${employeeID}</td>`;
-    row += `<td>${employeeTitle}</td>`;
-    row += `<td>${annualSalary}</td>`;
-    row += '<td><button class="delete-button">Delete</button></td>';
-    row += '</tr>'
-    $('#employee-list-tbody').append(row);
+    let html = '<tr>';
+    html += `<td>${firstName}</td>`;
+    html += `<td>${lastName}</td>`;
+    html += `<td>${employeeID}</td>`;
+    html += `<td>${employeeTitle}</td>`;
+    html += `<td>${annualSalary}</td>`;
+    html += '<td><button class="delete-button">Delete</button></td>';
+    html += '</tr>';
+
+    const rowElement = $(html);
+    rowElement.data('employee', employee);
+    $('#employee-list-tbody').append(rowElement);
 }
 
 // Clear all input fields
