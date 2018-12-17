@@ -28,12 +28,25 @@ function client_test_js() {
     unitTest('(new CurrencyUSD(25000.333)).format(true)', (new CurrencyUSD(25000.333)).format(true));
     unitTest('(new CurrencyUSD(25000.333)).format(false)', (new CurrencyUSD(25000.333)).format(false));
 
+    // Tests for class Employee
+    unitTest('new Employee("Grace", "Hopper", "1", "Admiral", "1000")', new Employee("Grace", "Hopper", "1", "Admiral", "1000"));
+    unitTest('new Employee("", "Hopper", "1", "Admiral", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee(null, "Hopper", "1", "Admiral", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "", "1", "Admiral", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", null, "1", "Admiral", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "Hopper", "", "Admiral", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "Hopper", null, "Admiral", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "Hopper", "1", "", "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "Hopper", "1", null, "1000")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "Hopper", "1", "Admiral", "")', null, new EmployeeError('invalid employee data'));
+    unitTest('new Employee("Grace", "Hopper", "1", "Admiral", null)', null, new EmployeeError('invalid employee data'));
+    unitTest('(new Employee("Grace", "Hopper", "1", "Admiral", 250000.333)).annualSalary.format()', '250,000.33');
 
-    unitTest('formatAsUSD(53)', '53.00');
-    unitTest('formatAsUSD(1.7)', '1.70');
-    unitTest('formatAsUSD(0)', '0.00');
-    unitTest('formatAsUSD(-50.55)', '-50.55');
-    unitTest('formatAsUSD(25000.333)', '25,000.33');
+    // unitTest('formatAsUSD(53)', '53.00');
+    // unitTest('formatAsUSD(1.7)', '1.70');
+    // unitTest('formatAsUSD(0)', '0.00');
+    // unitTest('formatAsUSD(-50.55)', '-50.55');
+    // unitTest('formatAsUSD(25000.333)', '25,000.33');
     logTestSummary();
 
     // Run a single unit test
@@ -44,7 +57,7 @@ function client_test_js() {
 
             if (expectedError) {
                 // [Failed] Exception was expected, but none was thrown
-                logFailOnException(expressionStr, null, expectedError);
+                logFailOnException(expressionStr, expectedError, null);
                 return false;
             } else if (result !== expected && (!isNaN(result) || !isNaN(expected))) {
                 // [Failed] Expected result was not produced
@@ -129,7 +142,8 @@ function client_test_js() {
         unitTest('\'true\'', 'true');
         unitTest('1 + 1', 2);
         unitTest('1 + 1 // Should fail', 5); // Should fail
-        unitTest('1 + 1 // Should fail', 2, 'Some exception'); // Should fail
+        unitTest('1 + 1 // Should fail', 2, new Error('Some exception')); // Should fail
+        unitTest('1 + 1 // Should fail', 2, 99999); // Should fail
         unitTest('5 / 0', Infinity);
         unitTest('parseInt(\'90.45\')', 90);
         unitTest('NaN', NaN);
