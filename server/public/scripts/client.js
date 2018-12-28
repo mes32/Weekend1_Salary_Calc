@@ -1,6 +1,6 @@
 // --- Global variables and constants --- //
 
-let employeeList = [];
+// let employeeList = [];
 
 // --- Function definitions --- //
 
@@ -32,6 +32,18 @@ function getEmployees() {
     });
 }
 
+// Requests that a new employee be added to the server using POST. Then updates
+// the displayed list in the DOM.
+function postEmployee(employee) {
+    $.ajax({
+        method: 'POST',
+        url: '/employee',
+        data: employee,
+    }).then(function(response) {
+        getEmployees();
+    });
+}
+
 // When the 'Submit' button is pressed. Take the actions needed to add an 
 // employee.
 function addEmployee() {
@@ -43,11 +55,14 @@ function addEmployee() {
 
     try {
         const employee = new Employee(firstName, lastName, employeeID, employeeTitle, annualSalary);
-        employeeList.push(employee);
-        updateExpenses();
-        updateEmployeeList(employee);
+        // employeeList.push(employee);
+        // updateExpenses();
+        // updateEmployeeList(employee);
+
+        postEmployee(employee);
+
         clearInputFields();
-        clearRequiredEmployeeFields();
+        deactivateRequiredEmployeeFields();
         return true;
     } catch (err) {
         console.log(err);
@@ -59,30 +74,30 @@ function addEmployee() {
 // When a 'Delete' button is pressed. Delete an employee's row (tr) from the 
 // employee table.
 function deleteEmployee() {
-    const rowElement = $(this).parent().parent();
-    const employee = rowElement.data('employee');
-    const i = employeeList.indexOf(employee);
-    employeeList.splice(i, 1);
+    // const rowElement = $(this).parent().parent();
+    // const employee = rowElement.data('employee');
+    // const i = employeeList.indexOf(employee);
+    // employeeList.splice(i, 1);
 
-    rowElement.remove();
-    updateExpenses();
+    // rowElement.remove();
+    // updateExpenses();
 }
 
 // Based on the running total of annual expenses, update the displayed heading 
 // for monthly expenses.
 function updateExpenses() {
-    let annualExpenses = 0.0;
-    for (let i = 0; i < employeeList.length; i++) {
-        annualExpenses += employeeList[i].annualSalary.amount;
-    }
-    const monthlyExpenses = new CurrencyUSD(annualExpenses / 12.0);
-    const str = monthlyExpenses.format(true);
-    $('#monthly-expenses').html('Total Monthly: ' + str);
-    if (monthlyExpenses.amount > 20000.0) {
-        $('#monthly-expenses').css('background-color', 'red');
-    } else {
-        $('#monthly-expenses').css('background-color', 'inherit');
-    }
+    // let annualExpenses = 0.0;
+    // for (let i = 0; i < employeeList.length; i++) {
+    //     annualExpenses += employeeList[i].annualSalary.amount;
+    // }
+    // const monthlyExpenses = new CurrencyUSD(annualExpenses / 12.0);
+    // const str = monthlyExpenses.format(true);
+    // $('#monthly-expenses').html('Total Monthly: ' + str);
+    // if (monthlyExpenses.amount > 20000.0) {
+    //     $('#monthly-expenses').css('background-color', 'red');
+    // } else {
+    //     $('#monthly-expenses').css('background-color', 'inherit');
+    // }
 }
 
 // Rebuild the employee list in the DOM using an updated list of employees from
@@ -101,14 +116,14 @@ function appendEmployee(employee) {
     const lastName = employee.lastName;
     const employeeID = employee.employeeID;
     const employeeTitle = employee.employeeTitle;
-    const annualSalary = employee.annualSalary.format();
+    const annualSalary = new CurrencyUSD(employee.annualSalary.amount);
 
     let html = '<tr>';
     html += `<td>${firstName}</td>`;
     html += `<td>${lastName}</td>`;
     html += `<td>${employeeID}</td>`;
     html += `<td>${employeeTitle}</td>`;
-    html += `<td>${annualSalary}</td>`;
+    html += `<td>${annualSalary.format()}</td>`;
     html += '<td><button class="delete-button">Delete</button></td>';
     html += '</tr>';
 

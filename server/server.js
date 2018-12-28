@@ -22,11 +22,13 @@ app.get('/employee', (req, res) => {
     res.send(employeeList);
 });
 
-// app.post('/employee', (req, res) => {
-//     let employeeToAdd = req.body;
-//     employeeList.push(employeeToAdd);
-//     res.sendStatus(201);
-// });
+// Responds to a client POST request. Appends a new employee to the list of
+// employees.
+app.post('/employee', (req, res) => {
+    let employeeToAdd = req.body;
+    employeeList.push(employeeToAdd);
+    res.sendStatus(201);
+});
 
 // --- Start the Server --- //
 
