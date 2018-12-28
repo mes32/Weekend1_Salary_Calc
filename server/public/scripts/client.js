@@ -16,8 +16,8 @@ function onReady() {
 
 // Add handler functions to interactive HTML elements
 function addEventHandlers() {
-    $('#submit-button').on('click', addEmployee);
-    $('#employee-list-tbody').on('click', '.delete-button', deleteEmployee);
+    $('#submit-button').on('click', submitButton);
+    $('#employee-list-tbody').on('click', '.delete-button', deleteButton);
 }
 
 // Requests an updated list of employees from the server using GET and then 
@@ -32,13 +32,26 @@ function getEmployees() {
 }
 
 // Requests that a new employee be added to the server using POST. Then updates
-// the displayed list in the DOM.
+// the displayed list of employees and expenses in the DOM.
 function postEmployee(employee) {
     $.ajax({
         method: 'POST',
         url: '/employee',
         data: employee,
     }).then(function(response) {
+        getEmployees();
+        getMonthlyExpenses();
+    });
+}
+
+// Requests that a given employee be removed from the server using DELETE. Then
+// updates the displayed list of employees and expenses in the DOM.
+function deleteEmployee(employee) {
+    $.ajax({
+        method: 'DELETE',
+        url: '/employee',
+        data: employee,
+    }).then(function (response) {
         getEmployees();
         getMonthlyExpenses();
     });
@@ -57,7 +70,7 @@ function getMonthlyExpenses() {
 
 // When the 'Submit' button is pressed. Take the actions needed to add an 
 // employee.
-function addEmployee() {
+function submitButton() {
     const firstName = $('#first-name').val();
     const lastName = $('#last-name').val();
     const employeeID = $('#employee-id').val();
@@ -78,16 +91,12 @@ function addEmployee() {
     }
 }
 
-// When a 'Delete' button is pressed. Delete an employee's row (tr) from the 
-// employee table.
-function deleteEmployee() {
-    // const rowElement = $(this).parent().parent();
-    // const employee = rowElement.data('employee');
-    // const i = employeeList.indexOf(employee);
-    // employeeList.splice(i, 1);
-
-    // rowElement.remove();
-    // updateExpenses();
+// When a 'Delete' button is pressed. Retrieves the employee object from the 
+// DOM. Then sends a request to the server to delete that employee.
+function deleteButton() {
+    const rowElement = $(this).parent().parent();
+    const employee = rowElement.data('employee');
+    deleteEmployee(employee);
 }
 
 // Update the displayed heading for monthly expenses (#monthly-expenses).
