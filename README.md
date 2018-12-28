@@ -2,6 +2,10 @@
 Create an application that records employee salaries and adds salaries up to report monthly costs. 
 
 ## Installation and Setup
+- Clone this repository `git clone https://github.com/mes32/Weekend1_Salary_Calc.git` and change directory `cd Weekend1_Salary_Calc/`
+- Install the neccessary Node.js packages `npm install`
+- Start the server `npm start`
+- You should see a client-side implementation of the Salary Calculator here [http://localhost:5000](http://localhost:5000)
 
 ## Features
 - The application has an input form that collects _employee first name, last name, ID number, job title, annual salary_.
@@ -15,8 +19,7 @@ Create an application that records employee salaries and adds salaries up to rep
 - JavaScript
 - jQuery - Selectors, append, and event handling
 - Node.js - Simple client/server serving a static webpage and storing important data on the server-side
-- AJAX - HTTP requests to **C**reate, **R**ead, and **D**elete
+- AJAX - HTTP requests to **C**reate, **R**ead, and **D**elete employee data
 
 ## Screenshot
-
 ![Screenshot of App](screenshot.png)
