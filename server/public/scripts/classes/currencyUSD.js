@@ -31,3 +31,11 @@ class CurrencyUSD {
         this.format(false);
     }
 }
+
+// Error class for CurrencyUSD
+class CurrencyUSDError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'CurrencyUSDError';
+    }
+}
