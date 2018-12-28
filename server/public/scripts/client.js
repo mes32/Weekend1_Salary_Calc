@@ -7,6 +7,7 @@ let employeeList = [];
 $(onReady);
 function onReady() {
     addEventHandlers();
+    getEmployees();
 
     // If available run the corresponding set of unit tests for this script file
     if (typeof (client_test_js) === typeof(Function)) {
@@ -18,6 +19,17 @@ function onReady() {
 function addEventHandlers() {
     $('#submit-button').on('click', addEmployee);
     $('#employee-list-tbody').on('click', '.delete-button', deleteEmployee);
+}
+
+// Requests an updated list of employees from the server using GET and then 
+// updates the displayed list in the DOM.
+function getEmployees() {
+    $.ajax({
+        method: 'GET',
+        url: '/employee',
+    }).then(function(response) {
+        displayEmployeeList(response);
+    });
 }
 
 // When the 'Submit' button is pressed. Take the actions needed to add an 
@@ -73,8 +85,18 @@ function updateExpenses() {
     }
 }
 
-// Append a set of employee data to the employee list in the DOM
-function updateEmployeeList(employee) {
+// Rebuild the employee list in the DOM using an updated list of employees from
+// the server
+function displayEmployeeList(employeeList) {
+    $('#employee-list-tbody').empty();
+    for (employee of employeeList) {
+        appendEmployee(employee);
+    }
+}
+
+// Append data for one employee to the employee list in the DOM 
+// (#employee-list-tbody)
+function appendEmployee(employee) {
     const firstName = employee.firstName;
     const lastName = employee.lastName;
     const employeeID = employee.employeeID;
