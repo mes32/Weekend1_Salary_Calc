@@ -1,19 +1,18 @@
-// --- Global variables and constants --- //
-
-// let employeeList = [];
-
-// --- Function definitions --- //
+// --- Main onReady Function --- //
 
 $(onReady);
 function onReady() {
     addEventHandlers();
     getEmployees();
+    getMonthlyExpenses();
 
     // If available run the corresponding set of unit tests for this script file
     if (typeof (client_test_js) === typeof(Function)) {
         client_test_js();
     }
 }
+
+// --- Function Definitions --- //
 
 // Add handler functions to interactive HTML elements
 function addEventHandlers() {
@@ -41,6 +40,18 @@ function postEmployee(employee) {
         data: employee,
     }).then(function(response) {
         getEmployees();
+        getMonthlyExpenses();
+    });
+}
+
+// Requests the current monthly expenses from the server using GET and then 
+// updates the displayed expenses in the DOM.
+function getMonthlyExpenses() {
+    $.ajax({
+        method: 'GET',
+        url: '/monthly-expenses',
+    }).then(function (response) {
+        displayMonthlyExpenses(response);
     });
 }
 
@@ -55,10 +66,6 @@ function addEmployee() {
 
     try {
         const employee = new Employee(firstName, lastName, employeeID, employeeTitle, annualSalary);
-        // employeeList.push(employee);
-        // updateExpenses();
-        // updateEmployeeList(employee);
-
         postEmployee(employee);
 
         clearInputFields();
@@ -83,21 +90,16 @@ function deleteEmployee() {
     // updateExpenses();
 }
 
-// Based on the running total of annual expenses, update the displayed heading 
-// for monthly expenses.
-function updateExpenses() {
-    // let annualExpenses = 0.0;
-    // for (let i = 0; i < employeeList.length; i++) {
-    //     annualExpenses += employeeList[i].annualSalary.amount;
-    // }
-    // const monthlyExpenses = new CurrencyUSD(annualExpenses / 12.0);
-    // const str = monthlyExpenses.format(true);
-    // $('#monthly-expenses').html('Total Monthly: ' + str);
-    // if (monthlyExpenses.amount > 20000.0) {
-    //     $('#monthly-expenses').css('background-color', 'red');
-    // } else {
-    //     $('#monthly-expenses').css('background-color', 'inherit');
-    // }
+// Update the displayed heading for monthly expenses (#monthly-expenses).
+function displayMonthlyExpenses(expenses) {
+    const currency = new CurrencyUSD(expenses.ammount);
+    const currencyStr = currency.format(true);
+    $('#monthly-expenses').html('Total Monthly: ' + currencyStr);
+    if (currency.amount > 20000.0) {
+        $('#monthly-expenses').css('background-color', 'red');
+    } else {
+        $('#monthly-expenses').css('background-color', 'inherit');
+    }
 }
 
 // Rebuild the employee list in the DOM using an updated list of employees from
