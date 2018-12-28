@@ -100,17 +100,18 @@ function addEmployee() {
     const employeeTitle = $('#employee-title').val();
     const annualSalary = $('#annual-salary').val();
 
-    // TODO: Check that inputs are complete and provide visual feedback
-
     try {
         const employee = new Employee(firstName, lastName, employeeID, employeeTitle, annualSalary);
         employeeList.push(employee);
-
         updateExpenses();
         updateEmployeeList(employee);
         clearInputFields();
+        clearRequiredEmployeeFields();
+        return true;
     } catch (err) {
         console.log(err);
+        updateRequiredEmployeeFields(firstName, lastName, employeeID, employeeTitle, annualSalary);
+        return false;
     }
 }
 
@@ -163,6 +164,34 @@ function updateEmployeeList(employee) {
     const rowElement = $(html);
     rowElement.data('employee', employee);
     $('#employee-list-tbody').append(rowElement);
+}
+
+// Activate annotation indicating required input fields that are missing user
+// input strings. Also selectively deactivates fields that now have data.
+// (e.g. elements with class .require-border and .require-txt)
+function updateRequiredEmployeeFields(firstName, lastName, employeeID, employeeTitle, annualSalary) {
+    const requiredFields = [
+        { inputText: firstName, htmlClass: '.require-first-name' },
+        { inputText: lastName, htmlClass: '.require-last-name' },
+        { inputText: employeeID, htmlClass: '.require-employee-id' },
+        { inputText: employeeTitle, htmlClass: '.require-employee-title' },
+        { inputText: annualSalary, htmlClass: '.require-annual-salary' },
+        { inputText: lastName, htmlClass: '.require-last-name' },
+    ];
+
+    for (let req of requiredFields) {
+        if (!req.inputText) {
+            $(req.htmlClass).toggleClass('require-active', true);
+        } else {
+            $(req.htmlClass).toggleClass('require-active', false);
+        }
+    }
+}
+
+// Hide any previously activated annotation indicating a required input field
+// (e.g. elements with class .require-border and .require-txt)
+function deactivateRequiredEmployeeFields() {
+    $('#inputs-flex-box').find('.require-active').toggleClass('require-active', false);
 }
 
 // Clear all input fields
